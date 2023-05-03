@@ -1,0 +1,16 @@
+version: '3'
+services:
+    localstack:
+        image: localstack/localstack
+        network_mode: bridge
+        environment:
+            - AWS_DEFAULT_REGION=us-east-2
+            - EDGE_PORT=4566
+            - SERVICES=dynamodb,s3
+            - EAGER_SERVICE_LOADING=1
+        ports:
+            - '4566:4566'
+        volumes:
+            # - "./init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh"
+            - "${TMPDIR:-/var/lib/localstack}:/var/lib/localstack"
+            - "/var/run/docker.sock:/var/run/docker.sock"
